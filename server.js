@@ -41,7 +41,35 @@ io.on("connection", (socket) => {
         data: { socketId: socket.id },
       })
       .then((res) => {
-        if (res.data.userDeleted === null) {
+        if (res.data.userDeleted.solved === true) {
+          axios
+            .patch(`http://localhost:${port}/api/counter`, {
+              action: "disconnect solved",
+            })
+            .then(() =>
+              axios
+                .get(`http://localhost:${port}/api/counter`)
+                .then((res) => res.data.counterGotten)
+                .then(({ usersSolved, usersTotal }) => {
+                  if (usersSolved === usersTotal) {
+                    axios
+                      .patch(`http://localhost:${port}/api/counter/problem`)
+                      .then(() => io.emit("new problem"))
+                      .then(() => {
+                        axios.post(`http://localhost:${port}/api/chat`, {
+                          userId: "2Pi Bot",
+                          msg: `A new problem is available 💡`,
+                          socketId: "1",
+                        });
+                      })
+                      .then(() => io.emit("update messages"));
+                    if (usersSolved === 0 && usersTotal === 0) {
+                      axios.delete(`http://localhost:${port}/api/chat/reset`);
+                    }
+                  }
+                })
+            );
+        } else {
           axios
             .patch(`http://localhost:${port}/api/counter`, {
               action: "disconnect",
@@ -69,65 +97,36 @@ io.on("connection", (socket) => {
                   }
                 })
             );
-        } else {
-          if (res.data.userDeleted.solved === true) {
-            axios
-              .patch(`http://localhost:${port}/api/counter`, {
-                action: "disconnect solved",
-              })
-              .then(() =>
-                axios
-                  .get(`http://localhost:${port}/api/counter`)
-                  .then((res) => res.data.counterGotten)
-                  .then(({ usersSolved, usersTotal }) => {
-                    if (usersSolved === usersTotal) {
-                      axios
-                        .patch(`http://localhost:${port}/api/counter/problem`)
-                        .then(() => io.emit("new problem"))
-                        .then(() => {
-                          axios.post(`http://localhost:${port}/api/chat`, {
-                            userId: "2Pi Bot",
-                            msg: `A new problem is available 💡`,
-                            socketId: "1",
-                          });
-                        })
-                        .then(() => io.emit("update messages"));
-                      if (usersSolved === 0 && usersTotal === 0) {
-                        axios.delete(`http://localhost:${port}/api/chat/reset`);
-                      }
-                    }
-                  })
-              );
-          } else {
-            axios
-              .patch(`http://localhost:${port}/api/counter`, {
-                action: "disconnect",
-              })
-              .then(() =>
-                axios
-                  .get(`http://localhost:${port}/api/counter`)
-                  .then((res) => res.data.counterGotten)
-                  .then(({ usersSolved, usersTotal }) => {
-                    if (usersSolved === usersTotal) {
-                      axios
-                        .patch(`http://localhost:${port}/api/counter/problem`)
-                        .then(() => io.emit("new problem"))
-                        .then(() => {
-                          axios.post(`http://localhost:${port}/api/chat`, {
-                            userId: "2Pi Bot",
-                            msg: `A new problem is available 💡`,
-                            socketId: "1",
-                          });
-                        })
-                        .then(() => io.emit("update messages"));
-                      if (usersSolved === 0 && usersTotal === 0) {
-                        axios.delete(`http://localhost:${port}/api/chat/reset`);
-                      }
-                    }
-                  })
-              );
-          }
         }
+      })
+      .catch((err) => {
+        axios
+          .patch(`http://localhost:${port}/api/counter`, {
+            action: "disconnect",
+          })
+          .then(() =>
+            axios
+              .get(`http://localhost:${port}/api/counter`)
+              .then((res) => res.data.counterGotten)
+              .then(({ usersSolved, usersTotal }) => {
+                if (usersSolved === usersTotal) {
+                  axios
+                    .patch(`http://localhost:${port}/api/counter/problem`)
+                    .then(() => io.emit("new problem"))
+                    .then(() => {
+                      axios.post(`http://localhost:${port}/api/chat`, {
+                        userId: "2Pi Bot",
+                        msg: `A new problem is available 💡`,
+                        socketId: "1",
+                      });
+                    })
+                    .then(() => io.emit("update messages"));
+                  if (usersSolved === 0 && usersTotal === 0) {
+                    axios.delete(`http://localhost:${port}/api/chat/reset`);
+                  }
+                }
+              })
+          );
       });
   });
 });
