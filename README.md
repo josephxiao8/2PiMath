@@ -9,4 +9,4 @@
 * [axios](https://axios-http.com/)
 * [react-latex](https://github.com/zzish/react-latex)
 * [tailwindcss](https://tailwindcss.com/)
-* [moongoose](https://mongoosejs.com/docs/)
+* [moongoose](https://mongoosejs.com/)
