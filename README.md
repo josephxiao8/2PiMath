@@ -3,7 +3,7 @@
 
 <img src="/photos/landingpage.png"></img>
 
-# How was it built?
+# How was 2Pi created?
 2Pi is a mern stack application. Other tools that were used to construct the site and its functionality are listed below,
 * [socket.io](https://socket.io/)
 * [axios](https://axios-http.com/)
