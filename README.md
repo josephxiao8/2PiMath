@@ -3,6 +3,12 @@
 
 <img src="/photos/landingpage.png"></img>
 
+The site features,
+* real time chat
+* Latex rendering when message is enclosed in ```$$ $$``` or ```$ $```
+* problems from a wide range of regional and national math contests
+* real time scoreboard and submissions page
+
 # How was 2Pi created?
 2Pi is a mern stack application. Other tools that were used to construct the site and its functionality are listed below,
 * [socket.io](https://socket.io/)
