@@ -1,5 +1,5 @@
 # 2Pi
-2Pi is an online community for math problem solvers. Chat and solve interesting problems together! [Try it out here](https://twopimath.herokuapp.com/)
+2Pi is an online community for math problem solvers. Users chat and solve problems together in real time! [Try it out here](https://twopimath.herokuapp.com/)
 
 <img src="/photos/landingpage.png"></img>
 
