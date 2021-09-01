@@ -7,10 +7,12 @@ const Scoreboard = (props) => {
   const [scoreboard, setScoreBoard] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/users/scoreboard").then((res) => {
-      setScoreBoard(res.data.userFound);
-      // console.log("rerender-scoreboard");
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/api/users/scoreboard`)
+      .then((res) => {
+        setScoreBoard(res.data.userFound);
+        // console.log("rerender-scoreboard");
+      });
   }, [props.show]);
 
   return (

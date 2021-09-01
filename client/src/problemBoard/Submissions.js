@@ -9,12 +9,14 @@ const Submissions = (props) => {
   const [submissions, setSubmissions] = useState([]);
 
   useEffect(() => {
-    axios.get(`/api/users/${username}`).then((res) => {
-      if (res.data.userFound.submissions.length !== 0) {
-        setSubmissions(res.data.userFound.submissions);
-      } else setSubmissions([]);
-      // console.log("rerender-submissions");
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/api/users/${username}`)
+      .then((res) => {
+        if (res.data.userFound.submissions.length !== 0) {
+          setSubmissions(res.data.userFound.submissions);
+        } else setSubmissions([]);
+        // console.log("rerender-submissions");
+      });
   }, [props.show]);
 
   return (

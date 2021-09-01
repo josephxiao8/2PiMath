@@ -20,7 +20,7 @@ function App({ socket }) {
 
   const getMessages = () => {
     axios
-      .get("/api/chat")
+      .get(`${process.env.REACT_APP_API_KEY}/api/chat`)
       .then((res) => {
         const newMessages = res.data.messages.map(
           ({ _id, userId, msg, socketId }) => {
@@ -43,7 +43,7 @@ function App({ socket }) {
   const { username } = useParams();
   useEffect(() => {
     getMessages();
-    axios.post("/api/users", {
+    axios.post(`${process.env.REACT_APP_API_KEY}/api/users`, {
       username: username,
       socketId: socket.id,
       submissons: [],
@@ -54,7 +54,7 @@ function App({ socket }) {
   // handler to send message
   const handleForm = (textBoxValue) => {
     axios
-      .post("/api/chat", {
+      .post(`${process.env.REACT_APP_API_KEY}/api/chat`, {
         userId: username,
         msg: textBoxValue,
         socketId: socket.id,

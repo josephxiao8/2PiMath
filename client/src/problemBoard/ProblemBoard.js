@@ -17,11 +17,11 @@ const ProblemBoard = ({ socket }) => {
 
   const updateProblem = () => {
     axios
-      .get("/api/counter")
+      .get(`${process.env.REACT_APP_API_KEY}/api/counter`)
       .then((res) => res.data.counterGotten.curProblem)
       .then((idx) =>
         axios
-          .get("/api/problemBoard")
+          .get(`${process.env.REACT_APP_API_KEY}/api/problemBoard`)
           .then((res) => res.data.problems)
           .then((res) => {
             setStatement(res[idx].statement);
@@ -31,7 +31,7 @@ const ProblemBoard = ({ socket }) => {
       );
 
     //resets submissions and solved boolean
-    axios.patch(`/api/users/reset/`, {
+    axios.patch(`${process.env.REACT_APP_API_KEY}/api/users/reset/`, {
       username: username,
     });
 
@@ -48,33 +48,35 @@ const ProblemBoard = ({ socket }) => {
     e.preventDefault();
     if (answer === textBoxValue) {
       axios
-        .get(`/api/users/${username}`)
+        .get(`${process.env.REACT_APP_API_KEY}/api/users/${username}`)
         .then((res) => res.data.userFound.solved)
         .then((res) => {
           if (res === false) {
             axios
-              .post("/api/chat", {
+              .post(`${process.env.REACT_APP_API_KEY}/api/chat`, {
                 userId: "2Pi Bot",
                 msg: `${username} solved the problem 🥳`,
                 socketId: "1",
               })
               .then(() => socket.emit("message sent"));
             axios
-              .patch("/api/counter", {
+              .patch(`${process.env.REACT_APP_API_KEY}/api/counter`, {
                 action: "solve",
               })
               .then(() =>
                 axios
-                  .get("/api/counter")
+                  .get(`${process.env.REACT_APP_API_KEY}/api/counter`)
                   .then((res) => res.data.counterGotten)
                   .then(({ usersSolved, usersTotal }) => {
                     if (usersSolved === usersTotal) {
                       axios
-                        .patch("/api/counter/problem")
+                        .patch(
+                          `${process.env.REACT_APP_API_KEY}/api/counter/problem`
+                        )
                         .then(() => socket.emit("all users have solved"))
                         .then(() => {
                           axios
-                            .post("/api/chat", {
+                            .post(`${process.env.REACT_APP_API_KEY}/api/chat`, {
                               userId: "2Pi Bot",
                               msg: `A new problem is available 💡`,
                               socketId: "1",
@@ -86,7 +88,7 @@ const ProblemBoard = ({ socket }) => {
               );
           }
         });
-      axios.patch("/api/users", {
+      axios.patch(`${process.env.REACT_APP_API_KEY}/api/users`, {
         username: username,
         query: textBoxValue,
         verdict: true,
@@ -94,7 +96,7 @@ const ProblemBoard = ({ socket }) => {
       const element = document.getElementById("submission field");
       element.className = "p-2 rounded bg-green-100 mr-1";
     } else {
-      axios.patch("/api/users", {
+      axios.patch(`${process.env.REACT_APP_API_KEY}/api/users`, {
         username: username,
         query: textBoxValue,
         verdict: false,

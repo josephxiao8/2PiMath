@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import coverpageimg from "./pictures/coverpageimg.svg";
 
 import { io } from "socket.io-client";
-const socket = io("/");
+const socket = io(`${process.env.REACT_APP_API_KEY}/`);
 
 function App() {
   const [username, setUsername] = useState("");
