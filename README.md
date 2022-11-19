@@ -1,6 +1,6 @@
 # 2Pi
 
-**Note: The live site isn't deployed anymore due to the lack of resoruces to keep it running**
+**Note: The live site isn't active anymore due to a lack of resources to keep it running**
 
 
 2Pi is an online community for math problem solvers. Users chat and solve problems together in real time!
