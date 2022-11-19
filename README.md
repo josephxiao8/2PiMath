@@ -34,6 +34,3 @@ The site features,
 ### Submissions
 ![img3](https://user-images.githubusercontent.com/55932881/201453829-83bc4680-f09f-4d07-8fbd-4059449690dd.png)
 
-### Chat
-![img4](https://user-images.githubusercontent.com/55932881/201453897-c6b8a4de-aa52-4a3e-b181-2f9ef3c5db00.png)
-
